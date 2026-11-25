@@ -373,7 +373,7 @@ C7 OK 无 mermaid/代码壳残留         PASS
 
 ## 这套脚本生成过什么
 
-九科、5892 篇笔记、48 册、3920 页：**https://github.com/b8n7hrptt5-wq/high-school-notes**
+九科、716 课正文（另有 5176 张知识点卡供双链）、48 册、3920 页：**https://github.com/b8n7hrptt5-wq/high-school-notes**
 
 那个仓库里是成品 PDF 和 markdown 源文件，可以拿来对照这个脚本能做出什么，也可以直接读。
 
