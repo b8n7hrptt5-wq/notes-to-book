@@ -39,7 +39,7 @@
 ## 快速开始
 
 ```bash
-git clone https://github.com/<your-name>/notes-to-book.git
+git clone https://github.com/b8n7hrptt5-wq/notes-to-book.git
 cd notes-to-book
 pip install -r requirements.txt
 
@@ -226,6 +226,16 @@ python3 bookgen.py [科目 ...] [--vault DIR] [--outdir DIR] [--only 册名] [--
 ```
 
 科目名不必是语文数学这些固定值，任何目录名都行；不认识的颜色会退回中性灰，教材版本退回「人教版」。
+
+退出码按「能不能进流水线」分三档，方便外面套脚本或 CI：
+
+| 退出码 | 含义 | 典型情形 |
+|---|---|---|
+| `0` | 全部成功 | 正常出书 |
+| `1` | 有册没生成出来 | 某册排版抛异常、指定科目下没有课时 |
+| `2` | 参数或路径错 | 笔记库不存在、`--only` 的册名没有匹配到任何一册 |
+
+`--only` 写错时不会静默跳过，会把该科目下**可用的册名**一并打印出来，照抄即可。
 
 ---
 

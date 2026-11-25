@@ -1,5 +1,8 @@
 # 生成 PDF 用
 reportlab>=4.0
 
+# 附录二「知识定位」按拼音排序要用（漏装会在生成索引时抛 ImportError）
+pypinyin>=0.49
+
 # 读取成品做验收、导出样张用（PyMuPDF）
 pymupdf>=1.23

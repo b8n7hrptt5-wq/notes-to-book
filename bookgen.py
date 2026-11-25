@@ -2347,23 +2347,61 @@ def main():
     if a.outdir:
         OUTDIR = os.path.abspath(os.path.expanduser(a.outdir))
     if not os.path.isdir(VAULT):
-        raise SystemExit("笔记库不存在：%s\n用 --vault 指定笔记库根目录。" % VAULT)
+        print("笔记库不存在：%s\n用 --vault 指定笔记库根目录。" % VAULT, file=sys.stderr)
+        return 2
     subs = a.subjects or [d for d in sorted(os.listdir(VAULT))
                           if os.path.isdir(os.path.join(VAULT, d)) and not d.startswith(".")]
+    explicit = bool(a.subjects)
     os.makedirs(OUTDIR, exist_ok=True)
-    total = 0
+
+    total = done = 0
+    failed = []
+    available = []
     for subj in subs:
+        try:
+            vols = scan_subject(subj)
+        except OSError as e:
+            print("! %s 读取失败：%s" % (subj, e))
+            failed.append(subj)
+            continue
+        if a.only:
+            available += [v["name"] for v in vols]
+        if not vols:
+            if explicit and not a.only:
+                print("! %s 下没有可排的册：检查层级是不是 科目/册/专题/单元/*.md" % subj)
+                failed.append(subj)
+            else:
+                print("· 跳过 %s（不是科目目录，或没有课时）" % subj)
+            continue
         print("== %s" % subj)
         for name, pdf, pages in build(subj, only=a.only):
+            if pages < 0:
+                failed.append("%s·%s" % (subj, name))
+                continue
             print("   %-28s %4s 页  %s" % (name, pages, os.path.basename(pdf)))
-            total += max(pages, 0)
-            if a.sample and pages > 0:
+            total += pages
+            done += 1
+            if a.sample:
                 pgs = {"01-封面": 1, "02-使用说明": 2, "03-目录": 3, "04-凡例": 4,
                        "05-章首页": 5, "06-课时": 6, "07-课时次页": 7}
                 made = export_samples(pdf, os.path.join(OUTDIR, "校对样张", subj), pgs)
                 print("     样张 %d 张" % len(made))
-    print("合计 %d 页" % total)
+
+    print("合计 %d 页 / %d 册" % (total, done))
+
+    # --only 一册都没匹配上：多半是册名写错了，把能用的名字列出来
+    if a.only and done == 0:
+        print("\n! --only %r 没有匹配到任何册。" % a.only)
+        if available:
+            print("  可用册名（照抄，含空格）：")
+            for n in dict.fromkeys(available):
+                print("    %s" % n)
+        return 2
+    if failed:
+        print("\n! %d 项没成：%s" % (len(failed), "、".join(failed)), file=sys.stderr)
+        return 1
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

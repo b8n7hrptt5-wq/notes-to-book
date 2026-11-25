@@ -19,15 +19,15 @@ for c in \
   /usr/local/bin/python3 \
   python3
 do
-  if command -v "$c" >/dev/null 2>&1 && "$c" -c "import reportlab, pymupdf" >/dev/null 2>&1; then
+  if command -v "$c" >/dev/null 2>&1 && "$c" -c "import reportlab, pymupdf, pypinyin" >/dev/null 2>&1; then
     PY="$c"; break
   fi
 done
 
 if [ -z "$PY" ]; then
-  echo "找不到装好依赖的 Python。先跑这一行装依赖，再双击本文件："
+  echo "找不到依赖齐全的 Python（需要 reportlab / pymupdf / pypinyin）。先装："
   echo
-  echo "    pip3 install --user reportlab pymupdf"
+  echo "    pip3 install --user reportlab pymupdf pypinyin"
   echo
   echo "（按任意键关闭）"; pause; exit 1
 fi
