@@ -64,6 +64,17 @@ python3 bookgen.py 化学 --only "必修第一册" --vault ...        # 只做�
 
 不写 `--vault` 时读环境变量 `NOTES_VAULT`，再缺省为 `~/notes`。
 
+### 不想敲命令：双击 `出书.command`（macOS）
+
+仓库根目录有个 `出书.command`，双击就出全部九科，跑完自动打开成品文件夹。
+
+- 它自己挑一个装好 `reportlab` / `pymupdf` 的 python——系统自带的 3.9 往往没装，直接 `python3 bookgen.py` 会报 `ModuleNotFoundError`
+- 默认读 `~/Library/Mobile Documents/com~apple~CloudDocs/高中笔记`，没有这个目录就退回 `examples/demo`
+- 想换路径：设 `NOTES_VAULT` / `NOTES_OUT` 环境变量，或直接改文件开头那几行
+- 首次双击若被系统拦下，右键 →「打开」放行一次即可
+
+Windows 上没有 `.command` 这种双击入口，把上面几行命令粘进 PowerShell 就行，或者告诉我，我照同一个思路做个 `.bat`。
+
 ---
 
 ## 输入格式
