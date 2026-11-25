@@ -38,6 +38,42 @@ export interface ExportResult {
 }
 
 /**
+ * 打印前等图就位。
+ *
+ * 只靠 printToPDF 自己等是不可靠的：实测同一份内容换模板后，有的模板整张图
+ * 不进成品（pdfjs 逐页数下来一张 Image XObject 都没有），有的正常。根因是
+ * 打印根被 display:none 藏起来时图片不解码；即使改成离屏参与布局，打印开始
+ * 的时机仍可能早于解码完成。所以这里显式等。
+ */
+async function waitPrintAssets(root: HTMLElement, ms = 5000): Promise<void> {
+  const imgs = Array.from(root.querySelectorAll("img"));
+  await Promise.all(
+    imgs.map(async (im) => {
+      if (im.complete) {
+        if (im.naturalWidth > 0) {
+          try {
+            await im.decode();
+          } catch {
+            /* 解码失败也照打，让核对去报错，不要卡住导出 */
+          }
+        }
+        return;
+      }
+      await new Promise<void>((resolve) => {
+        const done = () => {
+          im.removeEventListener("load", done);
+          im.removeEventListener("error", done);
+          resolve();
+        };
+        im.addEventListener("load", done, { once: true });
+        im.addEventListener("error", done, { once: true });
+        window.setTimeout(done, ms);
+      });
+    })
+  );
+}
+
+/**
  * 把预览里的 .ntb-page 克隆到打印根，交给 Obsidian 主进程的 printToPDF。
  * 预览与导出是同一份 DOM + 同一份 CSS，所以页数、断页位置必然一致。
  */
@@ -71,7 +107,10 @@ ${buildPrintCss(opts.settings, "#ntb-print-root")}
   body > *:not(#ntb-print-root) { display: none !important; }
   #ntb-print-root { display: block !important; padding: 0 !important; margin: 0 !important; }
 }
-@media screen { #ntb-print-root { display: none !important; } }
+/* 屏幕下不能 display:none：被隐藏的子树不会做布局，图片不解码，
+   打印时就可能整张图不出现在成品里（实测有些模板会丢图）。
+   放到屏幕外参与布局，既不干扰界面，又保证打印前尺寸与解码都已就绪。 */
+@media screen { #ntb-print-root { position: fixed !important; left: -20000px !important; top: 0 !important; display: block !important; } }
 `;
   document.head.appendChild(style);
   document.body.appendChild(root);
@@ -98,8 +137,17 @@ ${buildPrintCss(opts.settings, "#ntb-print-root")}
       const cs = col ? getComputedStyle(col) : null;
       console.log("[print p" + (i + 1) + "]", "colH", col?.clientHeight, "scrollH", col?.scrollHeight, "kids", col?.childElementCount, "font", cs?.fontFamily, cs?.fontSize, "w", col?.clientWidth);
     });
+    root.querySelectorAll<HTMLImageElement>("img").forEach((im) => {
+      const r = im.getBoundingClientRect();
+      const cs = getComputedStyle(im);
+      const page = im.closest<HTMLElement>(".ntb-page");
+      console.log("[print img]", "page", page?.dataset.page, "rect", Math.round(r.width) + "x" + Math.round(r.height),
+        "nw", im.naturalWidth, "complete", im.complete,
+        "disp", cs.display, "vis", cs.visibility, "op", cs.opacity, "maxH", cs.maxHeight, "src", im.getAttribute("src")?.slice(-24));
+    });
   }
   opts.mutate?.(root);
+  await waitPrintAssets(root);
 
   const ip = ipcRenderer;
   const done = new Promise<void>((resolve, reject) => {
@@ -134,18 +182,20 @@ ${buildPrintCss(opts.settings, "#ntb-print-root")}
 }
 
 /** 没有 Electron 打印时的退路：浏览器打印对话框（Chromium 里可以「另存为 PDF」） */
-export function fallbackPrint(pagesHost: HTMLElement, settings: DocSettings, template: Template) {
+export async function fallbackPrint(pagesHost: HTMLElement, settings: DocSettings, template: Template) {
   const root = document.createElement("div");
   root.id = "ntb-print-root";
   root.className = "print ntb-print-root";
   const style = document.createElement("style");
   style.textContent = `${buildCss(settings, template, "#ntb-print-root")}${buildPrintCss(settings, "#ntb-print-root")}
 @media print { body > *:not(#ntb-print-root) { display: none !important; } }
-@media screen { #ntb-print-root { display: none !important; } }`;
+@media screen { #ntb-print-root { position: fixed !important; left: -20000px !important; top: 0 !important; display: block !important; } }`;
   document.head.appendChild(style);
   document.body.appendChild(root);
   pagesHost.querySelectorAll(".ntb-page").forEach((p) => root.appendChild(p.cloneNode(true)));
   stackPrintPages(root, settings);
+  // 和 exportPdf 同理：图没解码完就打印，出来会缺图。
+  await waitPrintAssets(root);
   new Notice("已切换到打印视图，请在打印对话框里选择「另存为 PDF」。");
   window.print();
   window.setTimeout(() => {

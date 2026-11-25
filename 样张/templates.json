@@ -1,0 +1,192 @@
+[
+ {
+  "id": "article",
+  "name": "文章",
+  "pages": 6,
+  "tpl": "article",
+  "warn": 0,
+  "settled": true,
+  "overflowPages": [],
+  "counts": {
+   "ok": 45,
+   "missing": 0,
+   "manual": 3,
+   "mismatch": 0
+  },
+  "failed": false,
+  "pdfPages": 6,
+  "layoutPages": 6,
+  "issues": []
+ },
+ {
+  "id": "report",
+  "name": "正式报告",
+  "pages": 8,
+  "tpl": "report",
+  "warn": 0,
+  "settled": true,
+  "overflowPages": [],
+  "counts": {
+   "ok": 45,
+   "missing": 0,
+   "manual": 3,
+   "mismatch": 0
+  },
+  "failed": false,
+  "pdfPages": 8,
+  "layoutPages": 8,
+  "issues": []
+ },
+ {
+  "id": "minutes",
+  "name": "会议纪要",
+  "pages": 6,
+  "tpl": "minutes",
+  "warn": 0,
+  "settled": true,
+  "overflowPages": [],
+  "counts": {
+   "ok": 45,
+   "missing": 0,
+   "manual": 3,
+   "mismatch": 0
+  },
+  "failed": false,
+  "pdfPages": 6,
+  "layoutPages": 6,
+  "issues": []
+ },
+ {
+  "id": "handover",
+  "name": "交接资料",
+  "pages": 6,
+  "tpl": "handover",
+  "warn": 0,
+  "settled": true,
+  "overflowPages": [],
+  "counts": {
+   "ok": 45,
+   "missing": 0,
+   "manual": 3,
+   "mismatch": 0
+  },
+  "failed": false,
+  "pdfPages": 6,
+  "layoutPages": 6,
+  "issues": []
+ },
+ {
+  "id": "lecture",
+  "name": "课程讲义",
+  "pages": 7,
+  "tpl": "lecture",
+  "warn": 0,
+  "settled": true,
+  "overflowPages": [],
+  "counts": {
+   "ok": 45,
+   "missing": 0,
+   "manual": 3,
+   "mismatch": 0
+  },
+  "failed": false,
+  "pdfPages": 7,
+  "layoutPages": 7,
+  "issues": []
+ },
+ {
+  "id": "manual",
+  "name": "技术手册",
+  "pages": 6,
+  "tpl": "manual",
+  "warn": 0,
+  "settled": true,
+  "overflowPages": [],
+  "counts": {
+   "ok": 49,
+   "missing": 0,
+   "manual": 3,
+   "mismatch": 0
+  },
+  "failed": false,
+  "pdfPages": 6,
+  "layoutPages": 6,
+  "issues": []
+ },
+ {
+  "id": "anthology",
+  "name": "研究汇编",
+  "pages": 5,
+  "tpl": "anthology",
+  "warn": 0,
+  "settled": true,
+  "overflowPages": [],
+  "counts": {
+   "ok": 39,
+   "missing": 0,
+   "manual": 3,
+   "mismatch": 0
+  },
+  "failed": false,
+  "pdfPages": 5,
+  "layoutPages": 5,
+  "issues": []
+ },
+ {
+  "id": "portfolio",
+  "name": "图文作品集",
+  "pages": 6,
+  "tpl": "portfolio",
+  "warn": 0,
+  "settled": true,
+  "overflowPages": [],
+  "counts": {
+   "ok": 45,
+   "missing": 0,
+   "manual": 3,
+   "mismatch": 0
+  },
+  "failed": false,
+  "pdfPages": 6,
+  "layoutPages": 6,
+  "issues": []
+ },
+ {
+  "id": "worksheet",
+  "name": "练习册",
+  "pages": 7,
+  "tpl": "worksheet",
+  "warn": 0,
+  "settled": true,
+  "overflowPages": [],
+  "counts": {
+   "ok": 45,
+   "missing": 0,
+   "manual": 3,
+   "mismatch": 0
+  },
+  "failed": false,
+  "pdfPages": 7,
+  "layoutPages": 7,
+  "issues": []
+ },
+ {
+  "id": "longform",
+  "name": "长文集",
+  "pages": 6,
+  "tpl": "longform",
+  "warn": 0,
+  "settled": true,
+  "overflowPages": [],
+  "counts": {
+   "ok": 45,
+   "missing": 0,
+   "manual": 3,
+   "mismatch": 0
+  },
+  "failed": false,
+  "pdfPages": 6,
+  "layoutPages": 6,
+  "issues": []
+ }
+]

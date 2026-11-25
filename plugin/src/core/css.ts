@@ -291,6 +291,13 @@ ${scope} .ntb-doc hr { border: 0; border-top: 0.4pt solid var(--ntb-rule); margi
 /* ---------- 封面 ---------- */
 ${scope} .ntb-cover {
   position: absolute;
+  /* 铺满整页：不写 inset 时封面块是「收缩到内容宽」，标题一长（12pt 底字的模板
+     标题是 30pt，10 个字就接近 420px）就会在这个窄盒子里折行或被裁掉，
+     而且宽度随缩放变化——屏幕上看着缺字，打印出来却是好的，最难查。 */
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;

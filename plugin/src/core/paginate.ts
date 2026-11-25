@@ -661,10 +661,13 @@ export class Paginator {
         const on = isHd ? this.s.furniture.headerOn : this.s.furniture.footerOn;
         const raw = isHd ? this.s.furniture.headerText : this.s.furniture.footerText;
         const pn = isHd ? this.s.furniture.headerPageNo : this.s.furniture.footerPageNo;
-        const text = subst(raw, vars);
+        // 封面不排页眉页脚。模板的页眉常写 {{book}}，不挡掉的话书名会出现在封面上，
+        // 预览里因为封面元素压在页眉之上看不见，打印出来却有——两侧不一致最容易被当成 bug。
+        const isCover = rec.kind === "cover";
+        const text = isCover ? "" : subst(raw, vars);
         node.textContent = "";
         if (text) node.appendChild(document.createTextNode(text));
-        if (pn) {
+        if (pn && !isCover) {
           if (text) node.appendChild(document.createTextNode("　"));
           const sp = mk("span", "ntb-pn");
           sp.textContent = label;
