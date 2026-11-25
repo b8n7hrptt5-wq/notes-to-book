@@ -1,0 +1,5 @@
+# 生成 PDF 用
+reportlab>=4.0
+
+# 读取成品做验收、导出样张用（PyMuPDF）
+pymupdf>=1.23

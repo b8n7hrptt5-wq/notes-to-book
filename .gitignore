@@ -1,0 +1,23 @@
+# 成品与中间产物
+out/
+打印本/
+*.pdf
+# 示例成品留着，让人不用跑就能看效果
+!examples/sample-output.pdf
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# 系统与编辑器
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# 笔记库里的同步残留（拿 vault 当工作目录时）
+.obsidian/workspace*.json
+*冲突*
