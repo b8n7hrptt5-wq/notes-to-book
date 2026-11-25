@@ -1,0 +1,9 @@
+{
+  "id": "notes-to-book",
+  "name": "Notes to Book",
+  "version": "0.1.0",
+  "minAppVersion": "1.6.0",
+  "description": "把当前笔记、多篇笔记或文件夹排成书：分页预览、模板、局部调整、导出 PDF 并核对成品。",
+  "author": "notes-to-book",
+  "isDesktopOnly": true
+}

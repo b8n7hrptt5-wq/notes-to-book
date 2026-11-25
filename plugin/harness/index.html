@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>notes-to-book layout harness</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #8a8a8a; }
+  #preview { padding: 10mm; }
+  #preview .ntb-page { box-shadow: 0 2mm 6mm rgba(0,0,0,.3); margin: 0 auto 8mm !important; }
+  @media screen { #print-root { display: none; } }
+  @media print { #preview { display: none !important; } }
+</style>
+</head>
+<body>
+<div id="preview"></div>
+<script src="./harness.js"></script>
+</body>
+</html>

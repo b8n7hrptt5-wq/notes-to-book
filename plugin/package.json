@@ -1,0 +1,29 @@
+{
+  "name": "notes-to-book",
+  "version": "0.1.0",
+  "description": "Obsidian 排版与导出插件：把当前笔记、多篇笔记或整个文件夹排成 A4 书，导出前核对成品。",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc --noEmit && node esbuild.config.mjs production",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "obsidian",
+    "pdf",
+    "typesetting",
+    "pagination"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/pako": "^2.0.4",
+    "esbuild": "^0.28.0",
+    "obsidian": "^1.14.4",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "pako": "^2.1.0"
+  }
+}

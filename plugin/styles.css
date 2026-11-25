@@ -1,0 +1,160 @@
+/* Notes to Book — 插件界面。排版本身由 core/css.ts 生成的样式负责，这里只管工具面板 */
+
+.ntb-view { display: flex; flex-direction: column; height: 100%; padding: 0 !important; overflow: hidden; }
+
+.ntb-topbar {
+  display: flex; align-items: center; gap: 8px; padding: 8px 10px;
+  border-bottom: 1px solid var(--background-modifier-border);
+  flex-wrap: wrap;
+}
+.ntb-title { flex: 0 1 220px; }
+.ntb-name {
+  width: 100%; font-weight: 600; background: transparent; border: 1px solid transparent;
+  padding: 3px 6px; border-radius: 4px;
+}
+.ntb-name:hover { border-color: var(--background-modifier-border); }
+.ntb-name:focus { border-color: var(--interactive-accent); background: var(--background-primary); }
+.ntb-btn { display: inline-flex; align-items: center; gap: 4px; padding: 4px 9px; font-size: 12px; }
+.ntb-ico { display: inline-flex; }
+.ntb-ico svg { width: 14px; height: 14px; }
+.ntb-stat { margin-left: auto; font-size: 12px; color: var(--text-muted); }
+
+.ntb-main { flex: 1 1 auto; display: flex; min-height: 0; }
+
+.ntb-side {
+  flex: 0 0 200px; border-right: 1px solid var(--background-modifier-border);
+  display: flex; flex-direction: column; min-height: 0; overflow: auto;
+}
+.ntb-side-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 10px 4px; font-size: 11px; letter-spacing: .08em; color: var(--text-muted);
+}
+.ntb-items { padding: 0 6px 12px; }
+.ntb-item {
+  display: flex; align-items: center; gap: 4px; padding: 4px 6px; border-radius: 5px;
+  font-size: 12px; cursor: default;
+}
+.ntb-item:hover { background: var(--background-modifier-hover); }
+.ntb-item-name { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ntb-drag { color: var(--text-faint); cursor: grab; font-size: 10px; }
+.ntb-role {
+  font-size: 10px; padding: 1px 5px; border-radius: 3px; border: 1px solid var(--background-modifier-border);
+  background: transparent; color: var(--text-muted);
+}
+.ntb-mini { font-size: 11px; padding: 1px 6px; line-height: 1.5; }
+
+.ntb-stage { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; background: #6f6f6f; position: relative; }
+.ntb-zoombar { position: absolute; right: 12px; top: 8px; z-index: 5; display: flex; gap: 4px; }
+.ntb-zoombar .ntb-mini { background: rgba(255,255,255,.9); color: #222; border: none; }
+.ntb-pagehost { flex: 1 1 auto; overflow: auto; padding: 16px 0 40px; }
+.ntb-pagehost .ntb-page {
+  margin: 0 auto 14px; transform-origin: top center; box-shadow: 0 3px 12px rgba(0,0,0,.35);
+  background: #fff;
+}
+.ntb-pagehost { text-align: center; }
+.ntb-pagehost .ntb-page { display: inline-block; text-align: left; vertical-align: top; }
+.ntb-pagehost > .ntb-page { display: block; }
+.ntb-selected { outline: 2px solid #2f6fd0; outline-offset: -1px; }
+.ntb-flash { animation: ntb-flash 1.2s ease; }
+@keyframes ntb-flash { 0% { box-shadow: 0 0 0 4px #2f6fd0; } 100% { box-shadow: 0 3px 12px rgba(0,0,0,.35); } }
+
+.ntb-inspect {
+  flex: 0 0 260px; border-left: 1px solid var(--background-modifier-border);
+  overflow: auto; font-size: 12px;
+}
+.ntb-panel { padding: 10px 12px; }
+.ntb-panel-title { font-weight: 600; margin-bottom: 8px; }
+.ntb-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 6px 0; }
+.ntb-row-label { color: var(--text-muted); font-size: 11px; }
+.ntb-row input[type="range"] { width: 110px; }
+.ntb-num { display: inline-block; min-width: 30px; text-align: right; font-variant-numeric: tabular-nums; color: var(--text-muted); }
+.ntb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 8px 0; }
+.ntb-cell { display: flex; align-items: center; gap: 4px; }
+.ntb-cell span { color: var(--text-muted); font-size: 11px; }
+.ntb-cell input { width: 56px; }
+.ntb-toggles { display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0; }
+.ntb-toggle, .ntb-scope-btn {
+  font-size: 11px; padding: 3px 8px; border-radius: 999px;
+  border: 1px solid var(--background-modifier-border); background: transparent; color: var(--text-muted);
+}
+.ntb-toggle.on { background: var(--interactive-accent); color: var(--text-on-accent); border-color: transparent; }
+.ntb-sub { margin-top: 12px; padding-top: 8px; border-top: 1px dashed var(--background-modifier-border); }
+.ntb-sub-title { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; letter-spacing: .06em; }
+.ntb-sub input[type="text"] { width: 100%; margin-bottom: 4px; font-size: 12px; }
+.ntb-hint { margin-top: 14px; color: var(--text-faint); font-size: 11px; line-height: 1.6; }
+.ntb-meta { color: var(--text-muted); font-size: 11px; }
+.ntb-teaser { color: var(--text-faint); font-size: 11px; margin: 6px 0; line-height: 1.5; max-height: 72px; overflow: hidden; }
+.ntb-opts { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+.ntb-opts .ntb-toggle { align-self: flex-start; }
+.ntb-scope { margin-top: 12px; }
+.ntb-scope .ntb-scope-btn { display: block; width: 100%; margin-bottom: 4px; border-radius: 4px; }
+.ntb-rules { margin-top: 12px; }
+.ntb-rule-row { display: flex; gap: 6px; align-items: center; font-size: 10px; color: var(--text-muted); padding: 2px 0; }
+.ntb-empty { color: var(--text-faint); font-size: 11px; padding: 10px; line-height: 1.6; }
+.ntb-warnbox { margin: 8px; padding: 8px; border-radius: 6px; background: var(--background-secondary); }
+.ntb-warn-title { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
+.ntb-warn-row { font-size: 10px; color: var(--text-faint); line-height: 1.5; }
+.ntb-warn-pg { margin-left: 4px; color: var(--interactive-accent); }
+
+/* 报告 */
+.ntb-report { font-size: 12px; }
+.ntb-rep-head { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+.ntb-verdict { padding: 2px 10px; border-radius: 999px; font-weight: 600; font-size: 12px; }
+.ntb-verdict.good { background: #e7f4ea; color: #1f6b37; }
+.ntb-verdict.bad { background: #fdecec; color: #8d1f1f; }
+.ntb-rep-sum { color: var(--text-muted); }
+.ntb-rep-file { font-size: 10px; color: var(--text-faint); margin-bottom: 10px; word-break: break-all; }
+.ntb-rep-tabs { display: flex; gap: 6px; margin-bottom: 8px; }
+.ntb-tab { font-size: 11px; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--background-modifier-border); background: transparent; }
+.ntb-tab.on { background: var(--interactive-accent); color: var(--text-on-accent); border-color: transparent; }
+.ntb-rep-rows { max-height: 40vh; overflow: auto; border: 1px solid var(--background-modifier-border); border-radius: 6px; }
+.ntb-rep-table { width: 100%; font-size: 11px; border-collapse: collapse; }
+.ntb-rep-table th { position: sticky; top: 0; background: var(--background-secondary); text-align: left; padding: 4px 6px; font-weight: 600; }
+.ntb-rep-table td { padding: 3px 6px; border-top: 1px solid var(--background-modifier-border); vertical-align: top; }
+.ntb-rep-table tr.st-missing td { background: #fdf2f2; }
+.ntb-rep-table tr.st-mismatch td { background: #fff8e6; }
+.ntb-clickable { cursor: pointer; text-decoration: underline dotted; }
+.ntb-rep-issues { margin-top: 14px; }
+.ntb-issue { border-top: 1px solid var(--background-modifier-border); padding: 8px 0; }
+.ntb-issue-tag { font-size: 10px; padding: 1px 6px; border-radius: 3px; background: #fdecec; color: #8d1f1f; }
+.ntb-issue-detail { margin: 4px 0; line-height: 1.6; }
+.ntb-pair { display: flex; gap: 8px; margin-top: 6px; }
+.ntb-pair-col { flex: 1 1 0; min-width: 0; }
+.ntb-pair-title { font-size: 10px; color: var(--text-muted); margin-bottom: 2px; }
+.ntb-pair-body {
+  font-size: 10px; line-height: 1.55; white-space: pre-wrap; max-height: 150px; overflow: auto;
+  background: var(--background-secondary); border-radius: 4px; padding: 6px;
+}
+.ntb-rep-foot { margin-top: 12px; color: var(--text-faint); font-size: 10px; line-height: 1.6; }
+
+/* 选稿 */
+.ntb-pick-bar input { width: 100%; margin-bottom: 8px; }
+.ntb-pick-list { max-height: 50vh; overflow: auto; border: 1px solid var(--background-modifier-border); border-radius: 6px; }
+.ntb-pick-row { display: flex; align-items: center; gap: 8px; padding: 4px 8px; font-size: 12px; }
+.ntb-pick-row:hover { background: var(--background-modifier-hover); }
+.ntb-pick-row.folder { color: var(--text-muted); }
+.ntb-pick-name { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ntb-pick-foot { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+.ntb-pick-foot .ntb-meta { flex: 1 1 auto; }
+
+/* 离屏渲染容器 */
+.ntb-offscreen { position: absolute; left: -100000px; top: 0; width: 210mm; visibility: hidden; }
+
+/* 缩放占位框 */
+.ntb-pagehost { padding-top: 26px; }
+.ntb-scaler { margin: 0 auto 14px; position: relative; }
+.ntb-scaler > .ntb-page { margin: 0 !important; box-shadow: 0 3px 12px rgba(0,0,0,.35); }
+
+/* Obsidian 把任务列表的勾选框换成 input，打印时不可靠，这里自己画 */
+.ntb-doc li.task-list-item { list-style: none; margin-left: -1.1em; }
+.ntb-doc li.task-list-item > input[type="checkbox"] { display: none; }
+.ntb-doc li.task-list-item::before {
+  content: "☐"; margin-right: .35em; color: var(--ntb-muted);
+  font-family: var(--ntb-font-hei);
+}
+.ntb-doc li.task-list-item[data-task="x"]::before { content: "☑"; color: var(--ntb-accent); }
+.ntb-doc .ntb-raw-mermaid, .ntb-doc .ntb-raw-math {
+  font-family: var(--ntb-font-mono); font-size: .82em; color: var(--ntb-muted);
+  background: var(--ntb-tint); border-left: 2pt solid var(--ntb-rule); padding: 4pt 6pt;
+  white-space: pre-wrap; margin: 0;
+}
